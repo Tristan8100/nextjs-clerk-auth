@@ -2,10 +2,17 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { SignOutButton } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
-export const instant = false;
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={<p>Loading dashboard...</p>}>
+      <DashboardContent />
+    </Suspense>
+  );
+}
 
-export default async function DashboardPage() {
+async function DashboardContent() {
   const user = await currentUser();
 
   if (!user) {
